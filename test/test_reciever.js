@@ -7,7 +7,7 @@ request.post('http://dev073.baidu.com:8480/receiver',{
       value:  fs.createReadStream('../package.json'),
       options: {
         filename: 'package.json',
-        contentType: 'image/jpg'
+        contentType: 'text/json'
       }
     },
     to : './temp/package.json'
