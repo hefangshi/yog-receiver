@@ -9,6 +9,9 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
   app.post('/receiver',multer(conf));
   app.post('/receiver',function( req, resp, next ) {
     var body = req.body;
+    
+    yog.log.debug( '[receiver] copy file root', conf.root);
+    yog.log.debug( '[receiver] copy file to', body.to);
     var to = path.join( conf.root, body.to );
     yog.log.debug( '[receiver] copy file to', to);
     cp.exec( conf.cmd + path.dirname( to ),
