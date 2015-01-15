@@ -6,14 +6,17 @@ var os = require('os');
 var async = require('async');
 
 var receiver = module.exports['yog-receiver'] = function( app, conf ){
-  console.log('hook receiver start');
+  yog.log.debug('[receiver] ' + 'hook receiver start');
+
   app.post('/receiver',multer(conf));
   app.post('/receiver',function( req, resp, next ) {
     if( !req.body 
       || !req.body.to 
       || !req.files
-      || Object.keys(req.files).length 
+      || !Object.keys(req.files).length 
     ){
+      yog.log.debug('[receiver] ' + 'illegal request');
+
       return next('illegal request');
     }
 
@@ -28,11 +31,15 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
     cp.exec( conf.cmd + path.dirname( to ),
       function( e ) {
         if( e ){
-          yog.log.fatal( e );
+          yog.log.debug('[receiver] ' + 'mkdir end,', e );
         }
         async.each(Object.keys(req.files),
           function( file, done) {
-          
+            if( !file.buffer ){
+              done(null);
+              yog.log.debug('[receiver] copy end not a file');
+              return
+            }
             var ws = fs.createWriteStream( to );
             ws.end( req.files[file].buffer );
           
@@ -45,7 +52,8 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
             });
           },
           function( e ) {
-            req.end(null,e ? 0 : 1);
+            yog.log.debug('[receiver] ' + 'receiver end ', e );
+            resp.end(e ? '1' : '0');
           });
       });
   });
@@ -54,5 +62,14 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
 receiver.defaultConf = {
   inMemory : true,
   root     : path.join(__dirname,'../../'),
-  cmd      : (os.platform() == 'win32' ? 'mkdir' : 'mkdir -p') + ' '
+  cmd      : (os.platform() == 'win32' ? 'mkdir' : 'mkdir -p') + ' ',
+  onFileUploadStart : function( file ) {
+    yog.log.debug('[receiver] ' + file.fieldname + ' is starting ...')
+  },
+  onFileUploadData: function( file, data ) {
+    yog.log.debug('[receiver] ' + data.length + ' of ' + file.fieldname + ' arrived')
+  },
+  onFileUploadComplete: function( file ) {
+    yog.log.debug('[receiver] ' +  file.fieldname, 'end');
+  }
 };
