@@ -1,13 +1,22 @@
 {
   "name": "yog-receiver",
   "version": "1.0.0",
-  "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "main":"./plugins/yog-receiver/index.js",
   "author": "",
   "license": "ISC",
   "dependencies": {
     "multer": "^0.1.7"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssddi456/yog-receiver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ssddi456/yog-receiver/issues"
+  },
+  "homepage": "https://github.com/ssddi456/yog-receiver"
 }
