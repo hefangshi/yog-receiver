@@ -18,9 +18,9 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
           }
 
           var ws = fs.createWriteStream( to );
-          ws.write( req.files[0].buffer );
-
-          ws.on('drain',function() {
+          ws.end( req.files[0].buffer );
+          ws.on('finish',function() {
+            yog.log.debug('[receiver] copy end ', to);
             req.end(0);
           });
         })
