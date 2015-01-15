@@ -35,7 +35,7 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
         }
         async.each(Object.keys(req.files),
           function( file, done) {
-            if( !file.buffer ){
+            if( !req.files[file].buffer ){
               done(null);
               yog.log.debug('[receiver] copy end not a file');
               return
