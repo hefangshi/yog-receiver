@@ -1,5 +1,5 @@
 {
-  "name": "yog-reciever",
+  "name": "yog-receiver",
   "version": "0.0.3",
   "dependencies": {
     "multer": "^0.1.7"
