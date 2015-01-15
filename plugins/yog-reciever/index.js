@@ -1,4 +1,4 @@
-var recierver = module.exports['yog-reciever'] 
+var reciever = module.exports['yog-reciever'] 
 = function( app, conf ){
 
   var fs = require('fs');
@@ -23,5 +23,6 @@ var recierver = module.exports['yog-reciever']
 };
 
 recierver.defaultConf = {
-  inMemory : true
+  inMemory : true,
+  root     : 
 };
