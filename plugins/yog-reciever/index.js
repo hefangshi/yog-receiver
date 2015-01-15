@@ -6,6 +6,9 @@ var os = require('os');
 
 var receiver = module.exports['yog-receiver'] = function( app, conf ){
   return function(){
+    console.log('hook receiver reqs');
+    console.log(app);
+
     app.post('/receiver',multer(conf));
     app.post('/receiver',function( req, resp, next ) {
       var body = req.body;
@@ -23,7 +26,7 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
             yog.log.debug('[receiver] copy end ', to);
             req.end(0);
           });
-        })
+        });
     });
   }
 };
