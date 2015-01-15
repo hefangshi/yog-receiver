@@ -61,7 +61,7 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
 
 receiver.defaultConf = {
   inMemory : true,
-  root     : path.join(__dirname,'../../'),
+  root     : yog.ROOT_PATH,
   cmd      : (os.platform() == 'win32' ? 'mkdir' : 'mkdir -p') + ' ',
   onFileUploadStart : function( file ) {
     yog.log.debug('[receiver] ' + file.fieldname + ' is starting ...')
