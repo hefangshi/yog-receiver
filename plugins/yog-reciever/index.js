@@ -5,8 +5,9 @@ var multer = require('multer');
 var os = require('os');
 
 var receiver = module.exports['yog-receiver'] = function( app, conf ){
+  console.log('hook receiver start');
   return function(){
-    console.log('hook receiver reqs');
+    console.log('hook receiver exec');
     console.log(app);
 
     app.post('/receiver',multer(conf));
