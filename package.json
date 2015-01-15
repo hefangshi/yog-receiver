@@ -8,7 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "multer": "^0.1.7"
+    "multer": "^0.1.7",
+    "async" : "*"
   },
   "devDependencies": {},
   "repository": {
