@@ -5,7 +5,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "main":"./plugins/yog-receiver/index.js",
-  "author": "",
+  "author": "ssddi456",
   "license": "ISC",
   "dependencies": {
     "multer": "^0.1.7",
