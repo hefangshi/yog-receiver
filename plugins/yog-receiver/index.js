@@ -11,12 +11,26 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
   var restart_timer;
   function call_restart () {
     yog.log.debug('wait for restart');
-
+    if( os.platform == 'win32' ){
+      yog.log.debug('restart wont run on win32 platform');
+      return;
+    }
     restart_timer = setTimeout(function() {
-      app.close(function() {
-        cp.exec('nohup sh ./bin/yog_control start > /dev/null 2>&1 &',
-                {cwd : yog.ROOT_PATH });
-      })
+      yog.server.close(function() {
+        if( fs.existsSync( 
+              path.join( yog.ROOT_PATH, 
+                         'bin/yog_control'))
+        ){
+          cp.exec('nohup sh ./bin/yog_control graceful > /dev/null 2>&1 &',
+                  {cwd : yog.ROOT_PATH });
+        } else {
+          cp.exec('(nohup sh ./bin/www &)',
+                  {cwd : yog.ROOT_PATH },
+            function() {
+              process.exit(0);
+            });
+        }
+      });
     },1000);
   }
   function wait_restart () {
