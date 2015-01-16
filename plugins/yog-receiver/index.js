@@ -14,7 +14,7 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
 
     restart_timer = setTimeout(function() {
       app.close(function() {
-        cp.exec('setsid sh ./bin/yog_control start & exit',
+        cp.exec('nohup sh ./bin/yog_control start > /dev/null 2>&1 &',
                 {cwd : yog.ROOT_PATH });
       })
     },1000);
