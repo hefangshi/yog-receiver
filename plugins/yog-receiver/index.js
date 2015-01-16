@@ -8,6 +8,18 @@ var async = require('async');
 var receiver = module.exports['yog-receiver'] = function( app, conf ){
   yog.log.debug('[receiver] ' + 'hook receiver start');
 
+  var restart_timer;
+  function call_restart () {
+    restart_timer = setTimeout(function() {
+      cp.exec('sh ./bin/yog_control restart',{cwd : yog.ROOT_PATH });
+    },1000);
+  }
+  function wait_restart () {
+    if( restart_timer ){
+      clearTimeout(restart_timer);
+    }
+  }
+
   app.post('/receiver',multer(conf));
   app.post('/receiver',function( req, resp, next ) {
     if( !req.body 
@@ -27,7 +39,8 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
 
     var to = path.join( conf.root, body.to );
     yog.log.debug( '[receiver] copy file to' + to);
-
+    
+    wait_restart();
     cp.exec( conf.cmd + path.dirname( to ),
       function( e ) {
         if( e ){
@@ -53,6 +66,11 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
           },
           function( e ) {
             yog.log.debug('[receiver] ' + 'receiver end ', e );
+
+            if( !e ){
+              call_restart();
+            }
+
             resp.end(e ? '1' : '0');
           });
       });
