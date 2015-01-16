@@ -26,8 +26,7 @@ fis.config.set('deploy',{
 yog2 release -d remote
 ```
 
-然后手动重启一下yog2 project。
-
+现在会在接受一批文件之后自动重启。
 
 #### unstall/卸载
 
