@@ -26,7 +26,7 @@ fis.config.set('deploy',{
 yog2 release -d remote
 ```
 
-现在会在接受一批文件之后自动重启。
+现在会在接受一批文件之后自动重启。上传间隔至少需要4秒钟。
 
 #### unstall/卸载
 
