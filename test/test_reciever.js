@@ -1,7 +1,7 @@
 var request = require('request');
 var fs = require('fs');
 
-request.post('http://localhost:8080/receiver',{
+request.post('http://dev073.baidu.com:8480/receiver',{
   formData : {
     custom_file: {
       value:  fs.createReadStream('../package.json'),

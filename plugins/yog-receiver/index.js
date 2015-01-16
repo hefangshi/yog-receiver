@@ -10,12 +10,15 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
 
   var restart_timer;
   function call_restart () {
+    yog.log.debug('wait for restart');
+
     restart_timer = setTimeout(function() {
-      cp.exec('sh ./bin/yog_control restart',{cwd : yog.ROOT_PATH });
+      cp.exec('sh ./bin/yog_control start',{cwd : yog.ROOT_PATH });
     },1000);
   }
   function wait_restart () {
     if( restart_timer ){
+      yog.log.debug('throttle for restart');
       clearTimeout(restart_timer);
     }
   }
