@@ -13,7 +13,8 @@ var receiver = module.exports['yog-receiver'] = function( app, conf ){
     yog.log.debug('wait for restart');
 
     restart_timer = setTimeout(function() {
-      cp.exec('setsid sh ./bin/yog_control start',{cwd : yog.ROOT_PATH });
+      cp.exec('nohup sh ./bin/yog_control start > /dev/null 2>&1 &',
+              {cwd : yog.ROOT_PATH });
     },1000);
   }
   function wait_restart () {
